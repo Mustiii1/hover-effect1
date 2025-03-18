@@ -1,23 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        body { background: #111; color: white; font-family: Arial, sans-serif; text-align: center; }
-        .hover-text { font-size: 2rem; cursor: pointer; }
-        .hover-image { position: absolute; width: 300px; height: 300px; opacity: 0; transition: opacity 0.3s; }
-    </style>
-</head>
-<body>
-    <div class="hover-text" data-image="https://source.unsplash.com/300x300/?fashion">Hover Over Me</div>
-    <img id="hoverImg" class="hover-image">
+<canvas id="hoverCanvas"></canvas>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/6.5.8/pixi.min.js"></script>
+<script>
+  let app = new PIXI.Application({
+    width: window.innerWidth,
+    height: window.innerHeight,
+    transparent: true
+  });
+  document.body.appendChild(app.view);
 
-    <script>
-        const text = document.querySelector('.hover-text'), img = document.getElementById('hoverImg');
-        text.addEventListener('mouseenter', () => { img.src = text.dataset.image; img.style.opacity = "1"; });
-        text.addEventListener('mousemove', e => { img.style.left = `${e.clientX + 20}px`; img.style.top = `${e.clientY + 20}px`; });
-        text.addEventListener('mouseleave', () => img.style.opacity = "0");
-    </script>
-</body>
-</html>
+  let texture = PIXI.Texture.from('your-image.jpg');
+  let sprite = new PIXI.Sprite(texture);
+  sprite.anchor.set(0.5);
+  sprite.x = app.screen.width / 2;
+  sprite.y = app.screen.height / 2;
+  app.stage.addChild(sprite);
+
+  window.addEventListener('mousemove', (e) => {
+    gsap.to(sprite, {
+      x: e.clientX,
+      y: e.clientY,
+      duration: 0.3,
+      ease: 'power2.out'
+    });
+  });
+</script>

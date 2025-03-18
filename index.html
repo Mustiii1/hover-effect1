@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { background: #111; color: white; font-family: Arial, sans-serif; text-align: center; }
+        .hover-text { font-size: 2rem; cursor: pointer; }
+        .hover-image { position: absolute; width: 300px; height: 300px; opacity: 0; transition: opacity 0.3s; }
+    </style>
+</head>
+<body>
+    <div class="hover-text" data-image="https://source.unsplash.com/300x300/?fashion">Hover Over Me</div>
+    <img id="hoverImg" class="hover-image">
+
+    <script>
+        const text = document.querySelector('.hover-text'), img = document.getElementById('hoverImg');
+        text.addEventListener('mouseenter', () => { img.src = text.dataset.image; img.style.opacity = "1"; });
+        text.addEventListener('mousemove', e => { img.style.left = `${e.clientX + 20}px`; img.style.top = `${e.clientY + 20}px`; });
+        text.addEventListener('mouseleave', () => img.style.opacity = "0");
+    </script>
+</body>
+</html>
